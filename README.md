@@ -19,9 +19,9 @@
 High Bandwidth Memory (HBM) is an advanced type of memory that stacks multiple DRAM dies vertically and connects them using through-silicon vias (TSVs). 
 
 ### Why HBM in DeepFrack?
-Bandwidth: Creates a shorter physical distance for data to travel between memory and processor. 
-Energy: Less power/bit than DRAM.
-Latency: Faster data transfer rates between memory and processors.
+1) Bandwidth: Creates a shorter physical distance for data to travel between memory and processor. 
+2) Energy: Less power/bit than DRAM.
+3) Latency: Faster data transfer rates between memory and processors.
 
 ### Results
 
@@ -30,13 +30,13 @@ Latency: Faster data transfer rates between memory and processors.
 
 #### Simba Analysis
 
-a) On-chip data reuse via distributed SRAM buffers.
-b) Minimizing DRAM access frequency.
+1) On-chip data reuse via distributed SRAM buffers.
+2) Minimizing DRAM access frequency.
 
 #### Aim Analysis
 
-a) AIMBus interconnects 
-b) No local DRAM bandwidth 
+1) AIMBus interconnects 
+2) No local DRAM bandwidth 
 
 
 
