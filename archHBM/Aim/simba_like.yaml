@@ -1,0 +1,76 @@
+architecture:
+  version: 0.3
+  subtree:
+    - name: System
+      attributes:
+        datawidth: 16
+        word-bits: 16
+        technology: 45nm
+        latency: 1ns
+      local:
+        - name: DRAM
+          class: DRAM
+          attributes:
+            type: DDR4
+            width: 16
+            block-size: 1
+            word-bits: 16
+            shared_bandwidth: 12
+      subtree:
+        - name: ws[0..1]
+          local:
+            - name: HBMArray
+              class: storage
+              subclass: smartbuffer_SRAM
+              attributes:
+                memory_depth: 16777216
+                memory_width: 256
+                word-bits: 16
+                cluster-size: 1
+                nports: 2
+                meshX: 2
+                shared_bandwidth: 256
+          subtree:
+            - name: PE
+              local:
+                - name: GLB
+                  class: storage
+                  subclass: smartbuffer_DRAMBuff
+                  attributes:
+                    memory_depth: 128
+                    memory_width: 256
+                    word-bits: 16
+                    cluster-size: 1
+                    meshX: 2
+                    shared_bandwidth: 16
+                - name: PEAccuBuffer[0..15]
+                  class: storage
+                  subclass: smartbuffer_DRAMBuff
+                  attributes:
+                    memory_depth: 2
+                    memory_width: 16
+                    cluster-size: 1
+                    word-bits: 16
+                    datawidth: 16
+                    meshX: 2
+                    read_bandwidth: 1 
+                    write_bandwidth: 1
+                - name: PEWeightRegs[0..255]
+                  class: storage
+                  subclass: smartbuffer_ReadRow
+                  attributes:
+                    memory_depth: 1
+                    memory_width: 16
+                    word-bits: 16
+                    cluster-size: 1
+                    num-ports: 2
+                    meshX: 2
+                    read_bandwidth: 1 
+                    write_bandwidth: 1
+                - name: LMAC[0..255]
+                  class: compute
+                  subclass: lmac
+                  attributes:
+                    latency: 1ns
+                    datawidth: 16
+                    meshX: 2

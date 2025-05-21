@@ -1,0 +1,78 @@
+architecture:
+  # ============================================================
+  # Architecture Description
+  # ============================================================
+  version: 0.3
+  subtree:
+    - name: system
+      local:
+        - name: DRAM
+          class: DRAM
+          attributes:
+            type: HBM2
+            width: 16
+            block-size: 1
+            word-bits: 16
+            shared_bandwidth: 12
+      subtree:
+        - name: eyeriss
+          attributes:
+            technology: 45nm
+            latency: 1ns
+          local:
+            - name: shared_glb
+              class: smartbuffer_SRAM
+              attributes:
+                memory_depth: 16384     # ?
+                memory_width: 256
+                word-bits: 16
+                n_banks: 4            
+                read_bandwidth: 16
+                write_bandwidth: 16
+            - name: DummyBuffer[0..31] # for better mapping
+              class: regfile
+              attributes:
+                depth: 16
+                width: 16
+                word-bits: 16
+                block-size: 1
+                meshX: 32
+          subtree:
+          - name: PE[0..1023]
+            local:
+              - name: ifmap_spad
+                class: smartbuffer_RF
+                attributes:
+                  memory_depth: 12
+                  memory_width: 16
+                  block-size: 1
+                  word-bits: 16
+                  meshX: 32
+                  read_bandwidth: 2
+                  write_bandwidth: 2
+              - name: weights_spad
+                class: smartbuffer_RF
+                attributes:
+                  memory_depth: 192             # 224
+                  memory_width: 16
+                  block-size: 1
+                  word-bits: 16
+                  meshX: 32
+                  read_bandwidth: 2
+                  write_bandwidth: 2
+              - name: psum_spad
+                class: smartbuffer_RF
+                attributes:
+                  memory_depth: 16                # 24
+                  memory_width: 16
+                  update_fifo_depth: 2
+                  block-size: 1
+                  word-bits: 16
+                  meshX: 32
+                  read_bandwidth: 2
+                  write_bandwidth: 2
+              - name: mac
+                class: intmac
+                attributes:
+                  datawidth: 16
+                  meshX : 32
